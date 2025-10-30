@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Mi Página Web</title>
+  <meta charset="UTF-8">
+  <title>Mi Página con Pestañas</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    nav a {
+      margin: 10px;
+      text-decoration: none;
+      color: #0077cc;
+    }
+    section {
+      display: none;
+    }
+    section:target {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <h1>¡Hola, mundo!</h1>
-  <p>Bienvenido a mi sitio web creado con GitHub Pages.</p>
+  <h1>Bienvenido a mi sitio</h1>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section id="inicio">
+    <h2>Inicio</h2>
+    <p>Esta es la sección de bienvenida.</p>
+  </section>
+
+  <section id="proyectos">
+    <h2>Proyectos</h2>
+    <p>Aquí puedes ver mis trabajos y desarrollos.</p>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <p>Puedes escribirme a: matias@email.com</p>
+  </section>
 </body>
 </html>
