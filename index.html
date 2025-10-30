@@ -60,3 +60,105 @@
     <p id="mensaje" style="color:red;"></p>
   </div>
 
+  <div id="preguntas" class="hidden">
+    <h2>Preguntas</h2>
+    <p>Pregunta 1</p>
+    <p>Pregunta 2</p>
+    <p>Pregunta 3</p>
+    <p>Pregunta 4</p>
+  </div>
+
+  <!-- Formulario de inicio de sesión -->
+  <div id="loginForm" class="hidden">
+    <h2>Iniciar sesión</h2>
+    <input type="text" id="loginUsuario" placeholder="Nombre de usuario">
+    <input type="email" id="loginCorreo" placeholder="Correo electrónico">
+    <input type="password" id="loginClave" placeholder="Contraseña">
+    <input type="password" id="loginConfirmar" placeholder="Confirmar contraseña">
+    <button onclick="iniciarSesion()">Confirmar</button>
+    <p>¿Ya tienes cuenta? <button onclick="mostrarRegistro()">Registrate</button></p>
+  </div>
+
+  <!-- Formulario de registro -->
+  <div id="registroForm" class="hidden">
+    <h2>Registrarse</h2>
+    <input type="text" id="registroUsuario" placeholder="Usuario o Gmail">
+    <input type="password" id="registroClave" placeholder="Contraseña">
+    <button onclick="registrarse()">Registrarse</button>
+  </div>
+
+  <script>
+    let usuario = null;
+
+    function calcular() {
+      if (!usuario) {
+        document.getElementById("mensaje").textContent = "Hace falta iniciar sesión.";
+        document.getElementById("preguntas").classList.add("hidden");
+      } else {
+        document.getElementById("mensaje").textContent = "";
+        document.getElementById("preguntas").classList.remove("hidden");
+      }
+    }
+
+    function mostrarLogin() {
+      document.getElementById("loginForm").classList.remove("hidden");
+      document.getElementById("registroForm").classList.add("hidden");
+      document.getElementById("preguntas").classList.add("hidden");
+    }
+
+    function mostrarRegistro() {
+      document.getElementById("registroForm").classList.remove("hidden");
+      document.getElementById("loginForm").classList.add("hidden");
+    }
+
+    function iniciarSesion() {
+      const usuarioInput = document.getElementById("loginUsuario").value;
+      const correo = document.getElementById("loginCorreo").value;
+      const clave = document.getElementById("loginClave").value;
+      const confirmar = document.getElementById("loginConfirmar").value;
+
+      if (usuarioInput && correo && clave && clave === confirmar) {
+        usuario = usuarioInput;
+        actualizarUsuario();
+        ocultarFormularios();
+      } else {
+        alert("Completa todos los campos correctamente.");
+      }
+    }
+
+    function registrarse() {
+      const usuarioInput = document.getElementById("registroUsuario").value;
+      const clave = document.getElementById("registroClave").value;
+
+      if (usuarioInput && clave) {
+        usuario = usuarioInput;
+        actualizarUsuario();
+        ocultarFormularios();
+      } else {
+        alert("Completa todos los campos.");
+      }
+    }
+
+    function actualizarUsuario() {
+      const userArea = document.getElementById("userArea");
+      userArea.innerHTML = `
+        <span>${usuario}</span>
+        <button class="flat-button" onclick="cerrarSesion()">Cerrar sesión</button>
+      `;
+    }
+
+    function cerrarSesion() {
+      usuario = null;
+      document.getElementById("userArea").innerHTML = `<button onclick="mostrarLogin()">Iniciar sesión</button>`;
+      document.getElementById("preguntas").classList.add("hidden");
+    }
+
+    function ocultarFormularios() {
+      document.getElementById("loginForm").classList.add("hidden");
+      document.getElementById("registroForm").classList.add("hidden");
+      document.getElementById("mensaje").textContent = "";
+    }
+  </script>
+
+</body>
+</html>
