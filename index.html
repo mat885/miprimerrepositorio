@@ -1,53 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Proyecto-carbono</title>
-  <style>
-    header {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background-color: #e0f7fa;
-    }
-    .flat-button {
-      background: none;
-      border: none;
-      color: #0077cc;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    #mensaje {
-      color: red;
-      margin-top: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Registrarse</title>
 </head>
 <body>
-  <header>
-    <div>
-      <form method="get" action="{% url 'calcular' %}">
-        <button class="flat-button" type="submit">Calcular</button>
-        {% if mensaje %}
-          <p id="mensaje">{{ mensaje }}</p>
-        {% endif %}
-      </form>
-    </div>
-    <div>
-      {% if user.is_authenticated %}
-        <span>{{ user.username }}</span>
-        <form method="post" action="{% url 'logout' %}">
-          {% csrf_token %}
-          <button class="flat-button" type="submit">Cerrar sesión</button>
-        </form>
-      {% else %}
-        <a href="{% url 'login' %}">Iniciar sesión</a>
-      {% endif %}
-    </div>
-  </header>
-
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+    <h2>Crear cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>
+    <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a></p>
 </body>
 </html>
