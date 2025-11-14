@@ -2,42 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Proyecto-carbono</title>
+    <title>Calculadora de CO₂</title>
     <style>
-        body { font-family: sans-serif; margin: 0; text-align: center; }
-        header { display: flex; justify-content: space-between; padding: 10px; background: #eee; }
-        .btn { padding: 8px 16px; cursor: pointer; }
-        #mensaje { color: red; margin-top: 20px; }
+        body { font-family: sans-serif; padding: 20px; }
+        input[type="number"] { width: 100px; padding: 5px; margin-bottom: 10px; }
+        button { padding: 8px 16px; cursor: pointer; }
+        #resultado { margin-top: 20px; font-weight: bold; color: green; }
     </style>
 </head>
 <body>
-    <header>
-        <button onclick="calcular()" class="btn">Calcular</button>
-        {% if user.is_authenticated %}
-            <div>
-                {{ user.username }}
-                <a href="{% url 'logout' %}" class="btn">Cerrar sesión</a>
-            </div>
-        {% else %}
-            <a href="{% url 'register' %}" class="btn">Registrarse</a>
-        {% endif %}
-    </header>
+    <form id="formulario">
+        <p>1. ¿Cuántas veces a la semana comes carne?</p>
+        <input type="number" id="carne" required><br>
 
-    <main>
-        <h1>Bienvenido</h1>
-        <p>Infografía</p>
-        <div id="mensaje"></div>
-    </main>
+        <p>2. ¿Cuántos km recorres semanalmente en auto?</p>
+        <input type="number" id="auto" required><br>
+
+        <p>3. ¿Cuántos km viajas en avión cada año?</p>
+        <input type="number" id="avion" required><br>
+
+        <button type="button" id="calcularBtn">Calcular</button>
+    </form>
+
+    <div id="resultado"></div>
 
     <script>
-        function calcular() {
-            const auth = {{ user.is_authenticated|yesno:"true,false" }};
-            if (auth) {
-                window.open("{% url 'preguntas' %}", "_blank");
-            } else {
-                document.getElementById("mensaje").textContent = "Debes iniciar sesión primero.";
+        const username = "{{ username }}";
+
+        document.getElementById("calcularBtn").addEventListener("click", function () {
+            const carne = parseFloat(document.getElementById("carne").value);
+            const auto = parseFloat(document.getElementById("auto").value);
+            const avion = parseFloat(document.getElementById("avion").value);
+
+            if ([carne, auto, avion].some(isNaN)) {
+                document.getElementById("resultado").textContent = "Por favor, completa todas las preguntas con números.";
+                return;
             }
-        }
+
+            const CO2_carne = carne * 7 * 2.5;
+            const CO2_auto = auto * 0.2;
+            const CO2_avion = avion * 0.15;
+
+            const total = CO2_carne + CO2_auto + CO2_avion;
+
+            document.getElementById("resultado").textContent =
+                `${username}, has generado aproximadamente ${total.toFixed(2)} kg de CO₂.`;
+        });
     </script>
 </body>
 </html>
