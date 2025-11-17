@@ -1,15 +1,40 @@
-<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Registrarse</title>
+    <title>Proyecto-carbono</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; text-align: center; }
+        header { display: flex; justify-content: space-between; padding: 10px; background: #eee; }
+        .btn { padding: 8px 16px; cursor: pointer; }
+        #mensaje { color: red; margin-top: 20px; }
+    </style>
 </head>
 <body>
-    <h2>Crear cuenta</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrarse</button>
-    </form>
-    <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión</a></p>
+    <header>
+        <button onclick="calcular()" class="btn">Calcular</button>
+        {% if user.is_authenticated %}
+            <div>
+                {{ user.username }}
+                <a href="{% url 'logout' %}" class="btn">Cerrar sesión</a>
+            </div>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn">Registrarse</a>
+        {% endif %}
+    </header>
+
+    <main>
+        <h1>Bienvenido</h1>
+        <p>Infografía</p>
+        <div id="mensaje"></div>
+    </main>
+
+    <script>
+        function calcular() {
+            const auth = {{ user.is_authenticated|yesno:"true,false" }};
+            if (auth) {
+                window.open("{% url 'preguntas' %}", "_blank");
+            } else {
+                document.getElementById("mensaje").textContent = "Debes iniciar sesión primero.";
+            }
+        }
+    </script>
 </body>
 </html>
