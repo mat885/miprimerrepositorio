@@ -1,26 +1,5 @@
+{% extends 'base.html' %}
 
-<nav>
-    <ul>
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-        <a href="/tasks">Calculadora</a>
-        {% if user.is_authenticated %}
-        <li>
-            <a href="/logout">Logout</a>
-        </li>
-        {% else %}
-        <li>
-            <a href="/signup">Signup</a>
-        </li>
-        <li>
-            <a href="/login">login</a>
-        </li>
-        {% endif %}
-    </ul>
-</nav>
-
-<h1>Home</h1>
-<p>Recordar arreglar conexion base.html con los content block </p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, soluta</p>
+{% block content %}
+<h1>Calculadora</h1>
+{% endblock %}
